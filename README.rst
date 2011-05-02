@@ -28,7 +28,7 @@ To install ``django-goog`` using ``pip`` run
 
 ::
 
-   $ pip install -e git+git://github.com/andialbrecht/django-goo.git
+   $ pip install -e git+git://github.com/andialbrecht/django-goog.git#egg=django-goog
 
 Then add ``"goog"`` to you ``INSTALLED_APPS`` in your
 ``settings.py``.
