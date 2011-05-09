@@ -7,7 +7,7 @@ class GoogDevelopmentMiddleware(object):
 
     def devmode_enabled(self, request):
         """Returns True iff the devmode is enabled."""
-        if not settings.DEBUG:
+        if not settings.DEBUG or request.is_ajax():
             return False
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR', None)
         if x_forwarded_for:
