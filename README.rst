@@ -5,20 +5,20 @@ django-goog -- Another Closure library helper
 `Closure library <http://code.google.com/closure/>`_ in a Django
 project.
 
-It hides all Closure dependency and compilation stuff so that you can
-focus on getting your first lines of JS code done. Compare it to
-adding a link to JQuery from some CDN when you want to try out some
-frontend stuff and want to play with JQuery features.
+It provides settings and commands to toggle between development and
+production mode, but doesn't try to provide on the fly compression or
+automatic detection of changes. Deployed code should always be
+compiled. Even during development it's much smarter to work with
+compiled code (except for JS development itself of course).
 
-``django-goog`` tries to stay out of the way as far as possible to let
-you switch to `more sophisticated
-<http://djangopackages.com/grids/g/asset-managers/>`_ compression
-and/or compilation solutions as soon as your frontend code
-matures. Therefore it provides simple template tags to load your
-frontend code either as is or compiled for a better performance when
-testing it. Additionally you can load CSS files distributed with the
-Closure library to avoid time consuming CSS work when experimenting
-with frontend code.
+``django-goog`` tries to stay out of the way as far as possible.
+Therefore it provides simple template tags to load your frontend code
+either as is or compiled for a better performance when testing
+it. Additionally you can load CSS files distributed with the Closure
+library to avoid time consuming CSS work when experimenting with
+frontend code. In production mode (i.e. when deployed) ``django-goog``
+simply does nothing except rendering a link to your compiled
+JavaScript sources.
 
 
 Installation
@@ -30,23 +30,12 @@ To install ``django-goog`` using ``pip`` run
 
    $ pip install -e git+git://github.com/andialbrecht/django-goog.git#egg=django-goog
 
-Then add ``"goog"`` to you ``INSTALLED_APPS`` in your
-``settings.py``.
+Then add ``"goog"`` to you ``INSTALLED_APPS`` in your ``settings.py``
+and add ``"goog.middleware.GoogDevelopmentMiddleware",`` to
+``MIDDLEWARE_CLASSES`` (only needed in development mode to serve
+JavaScript dependencies).
+
+TODO: Refer to docs, but write them first.
 
 
-Usage
------
-
-Since this app focuses on development it leaves it up to the developer
-to make sure that there's always an up-to-date compiled version of
-the frontend code.
-
-- TODO: describe settings
-- TODO: describe compilation
-
-
-Limitations
------------
-
-- issues with namespaces in compiled code
-- it's no compressor!
+Homepage: http://github.com/andialbrecht/django-goog
