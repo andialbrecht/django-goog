@@ -1,6 +1,7 @@
 import mimetypes
 import os
 
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseNotModified
 from django.utils.http import http_date, parse_http_date
 
@@ -13,13 +14,20 @@ def _guess_mimetype(path, default_type='application/octet-stream'):
 
 
 def serve_closure(request, path):
-    if path.split('/')[0] == 'goog':
+    ns = path.split('/')[0]
+    if ns == 'goog':
         return _serve_closure(request, path,
                               ('closure/', 'third_party/closure/'))
     else:
-        mimetype = _guess_mimetype(path)
-        raw = open('dlgicert/static/jslib/%s' % path, 'r')
-        return HttpResponse(raw, mimetype=mimetype)
+        namespaces = getattr(settings, 'GOOG_JS_NAMESPACES', {})
+        if ns not in namespaces or not namespaces[ns].get('path'):
+            return HttpResponseNotFound(path)
+        full_path = os.path.join(namespaces[ns].get('path'), path)
+        try:
+            stat = os.stat(full_path)
+        except OSError:
+            return HttpResponseNotFound(path)
+        return _serve_file(request, stat, path, full_path)
 
 
 def _serve_closure(request, path, prefixes):
@@ -34,8 +42,11 @@ def _serve_closure(request, path, prefixes):
             pass
     if full_path is None:
         return HttpResponseNotFound(path)
+    return _serve_file(request, stat, path, full_path)
+
+def _serve_file(request, stat, rel_path, full_path):
     since = request.META.get('HTTP_IF_MODIFIED_SINCE')
-    mimetype = _guess_mimetype(path)
+    mimetype = _guess_mimetype(rel_path)
     if since and parse_http_date(since) < stat.st_mtime:
         return HttpResponseNotModified(mimetype=mimetype)
     response = HttpResponse(open(full_path, 'rb').read(), mimetype=mimetype)
