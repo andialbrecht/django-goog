@@ -22,8 +22,8 @@ class GoogDevelopmentMiddleware(object):
         # This urlconf patching is inspired by debug_toolbar.
         # https://github.com/robhudson/django-debug-toolbar
         if self.devmode_enabled(request):
-            if request.urlconf != 'goog.urls':
-                original_urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
+            original_urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
+            if original_urlconf != 'goog.urls':
                 goog.urls.urlpatterns += patterns(
                     '',
                     ('', include(original_urlconf)),
