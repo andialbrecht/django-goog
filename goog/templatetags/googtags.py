@@ -6,8 +6,6 @@ from django import template
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from goog import utils, views
-
 register = template.Library()
 
 
