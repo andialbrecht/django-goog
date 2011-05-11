@@ -41,19 +41,3 @@ class Command(BaseCommand):
             f.close()
             print 'Compiled %s (%.3fkB)' % (outfile, len(out)/1024.0)
 
-        # raw_js = []
-        # for fname, url_path in utils.get_js_sources():
-        #     raw_js.append(open(fname).read())
-        # data = [('output_format', 'json'),
-        #         ('use_closure_library', 'true'),
-        #         ('output_info', 'compiled_code'),
-        #         ('compilation_level', 'ADVANCED_OPTIMIZATIONS'),
-        #         ('js_code', '\n'.join(raw_js))]
-        # data = urllib.urlencode(data)
-        # response = urllib2.urlopen('http://closure-compiler.appspot.com/compile',
-        #                            data)
-        # result = json.loads(response.read())
-        # js_config = utils.get_js_config()
-        # with open(js_config['compiled_file'], 'w') as f:
-        #     f.write(result['compiledCode'])
-        # print '%s (%.3fkB)' % (js_config['compiled_file'], (len(result['compiledCode'])/1024.0))

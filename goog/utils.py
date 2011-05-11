@@ -131,29 +131,3 @@ def get_compiled_mtime():
             earliest = stat
     return earliest.st_mtime
 
-
-# def get_js_config():
-#     js_config = {'sources': [], 'source_base_url': '/',
-#                  'compiled_file': None, 'compiled_url': None}
-#     js_config.update(getattr(settings, 'GOOG_JS_FILES', {}))
-#     return js_config
-
-
-# def _collect_js_paths(path):
-#     if os.path.splitext(path)[-1] == '.js':
-#         yield path
-#     elif os.path.isdir(path):
-#         for fname in os.listdir(path):
-#             if fname.startswith('.'):
-#                 continue
-#             fname = os.path.join(path, fname)
-#             for item in _collect_js_paths(fname):
-#                 yield item
-
-
-# def get_js_sources():
-#     js_config = get_js_config()
-#     for path in js_config['sources']:
-#         for item in reversed(list(_collect_js_paths(path))):
-#             url_path = "%s%s" % (js_config['source_base_url'], item[len(path):])
-#             yield item, url_path
