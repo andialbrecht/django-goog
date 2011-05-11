@@ -1,27 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import os
-import re
 import subprocess
 import sys
 
 from django.conf import settings
-from django.contrib.staticfiles import finders
 from django.core.management.base import BaseCommand
 
 from goog import utils
-
-
-
-def _get_infile(data):
-    if data['path'] is None:
-        url = re.sub('{{[ ]*STATIC_URL[ ]*}}', '', data['url'])
-        return finders.find(url)
-    return os.path.abspath(data['path'])
-
-def _get_outfile(infile, data):
-    parts = os.path.splitext(infile)
-    return os.path.abspath('%s_compiled%s' % parts)
 
 
 class Command(BaseCommand):
@@ -44,8 +30,8 @@ class Command(BaseCommand):
             cmd.extend(['-p', os.path.abspath(os.path.expanduser(data['path']))])
         # iterate files and compile them
         for key, data in getattr(settings, 'GOOG_JS_FILES', {}).iteritems():
-            infile = _get_infile(data)
-            outfile = _get_outfile(infile, data)
+            infile = utils._get_infile(data)
+            outfile = utils._get_outfile(infile, data)
             this_cmd = cmd+['-i', infile]
             p = subprocess.Popen(this_cmd, stdout=subprocess.PIPE)
             p.wait()
