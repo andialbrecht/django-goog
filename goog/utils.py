@@ -131,3 +131,7 @@ def get_compiled_mtime():
             earliest = stat
     return earliest.st_mtime
 
+
+def is_devmode():
+    """Returns True iff in development mode."""
+    return settings.DEBUG and getattr(settings, 'GOOG_DEV_MODE', False)

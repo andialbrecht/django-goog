@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 
 register = template.Library()
 
+from goog import utils
+
 
 class GoogLinksNode(template.Node):
 
@@ -51,8 +53,7 @@ class GoogLinksNode(template.Node):
     def render(self, context):
         html = []
         # JS
-        dev_mode = getattr(settings, 'GOOG_DEV_MODE', False)
-        if dev_mode:
+        if utils.is_devmode():
             # CSS
             html.extend(map(self._create_css_link,
                             getattr(settings, 'GOOG_DEV_CSS', [])))
