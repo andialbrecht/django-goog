@@ -14,6 +14,7 @@ class Command(BaseCommand):
     help = 'Compile javascript files.'
 
     def handle(self, *args, **options):
+        # TODO(andi) Always run googdeps before?
         closure_path = utils.get_closure_path(interactive=True)
         compiler_jar = utils.get_compiler_jar(interactive=True)
         calcdeps = os.path.join(closure_path, 'closure', 'bin', 'calcdeps.py')
