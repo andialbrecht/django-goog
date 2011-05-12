@@ -47,7 +47,7 @@ def _serve_closure(request, path, prefixes):
 def _serve_file(request, stat, rel_path, full_path):
     since = request.META.get('HTTP_IF_MODIFIED_SINCE')
     mimetype = _guess_mimetype(rel_path)
-    if since and parse_http_date(since) < stat.st_mtime:
+    if since and parse_http_date(since) > stat.st_mtime:
         return HttpResponseNotModified(mimetype=mimetype)
     response = HttpResponse(open(full_path, 'rb').read(), mimetype=mimetype)
     response["Last-Modified"] = http_date(stat.st_mtime)
