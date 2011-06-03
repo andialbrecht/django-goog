@@ -35,10 +35,8 @@ class Command(BaseCommand):
             outfile = utils._get_outfile(infile, data)
             this_cmd = cmd+['-i', infile]
             p = subprocess.Popen(this_cmd, stdout=subprocess.PIPE)
-            p.wait()
-            f = open(outfile, 'w')
-            out = p.stdout.read()
-            f.write(out)
-            f.close()
-            print 'Compiled %s (%.3fkB)' % (outfile, len(out)/1024.0)
+            stdout, stderr = p.communicate()
+            with open(outfile, 'w') as f:
+                f.write(stdout)
+            print 'Compiled %s (%.3fkB)' % (outfile, len(stdout)/1024.0)
 
