@@ -23,7 +23,7 @@ class Command(BaseCommand):
             data = namespaces.get(ns, None)
             if data is None:
                 print 'Skipping unknown namespace %r' % ns
-            cwd = os.path.abspath(os.path.expanduser(data['path']))
+            cwd = os.path.join(os.path.abspath(os.path.expanduser(data['path'])), "../")
             outfile = os.path.join(cwd, '%s/deps.js' % ns)
             this_cmd = cmd+['--root_with_prefix', '%s/ ../%s' % (ns, ns)]
             if data.get('use_goog', False):

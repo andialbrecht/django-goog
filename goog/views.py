@@ -22,7 +22,8 @@ def serve_closure(request, path):
         namespaces = getattr(settings, 'GOOG_JS_NAMESPACES', {})
         if ns not in namespaces or not namespaces[ns].get('path'):
             return HttpResponseNotFound(path)
-        full_path = os.path.join(namespaces[ns].get('path'), path)
+        full_path = os.path.abspath(
+            os.path.join(namespaces[ns].get('path'), '../', path))
         try:
             stat = os.stat(full_path)
         except OSError:
