@@ -16,18 +16,25 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # TODO(andi) Always run googdeps before?
         closure_path = utils.get_closure_path(interactive=True)
+        goog_path = os.path.join(closure_path, 'closure', 'goog')
+        goog_td_path = os.path.join(closure_path, 'third_party', 'closure', 'goog')
         compiler_jar = utils.get_compiler_jar(interactive=True)
         calcdeps = os.path.join(closure_path, 'closure', 'bin', 'calcdeps.py')
         cmd = [sys.executable, calcdeps,
                '-o', 'compiled',
                '--compiler_jar', compiler_jar,
-               '--compiler_flags=--compilation_level=ADVANCED_OPTIMIZATIONS']
+               '--compiler_flags=--compilation_level=ADVANCED_OPTIMIZATIONS',
+               ]
         # add namespaces -p path
         goog_included = False
+        goog_td_included = False
         for key, data in getattr(settings, 'GOOG_JS_NAMESPACES', {}).iteritems():
-            if not goog_included and data.get('use_goog', data.get('use_goog_third_party', False)):
-                cmd.extend(['-p', closure_path])
+            if not goog_included and data.get('use_goog', False):
+                cmd.extend(['-p', goog_path])
                 goog_included = True
+            if not goog_td_included and data.get('use_goog_third_party', False):
+                cmd.extend(['-p', goog_td_path])
+                goog_td_included = True
             cmd.extend(['-p', os.path.abspath(os.path.expanduser(data['path']))])
         # iterate files and compile them
         for key, data in getattr(settings, 'GOOG_JS_FILES', {}).iteritems():
