@@ -20,7 +20,7 @@ class GoogLinksNode(template.Node):
         return '<link rel="stylesheet" href="%s" />' % url
 
     def _create_js_tag(self, fname, context):
-        tag = '<script src="%s"></script>'
+        tag = '<script src="%s" type="text/javascript"></script>'
         return template.Template(tag % fname).render(context)
 
     def _render_dev_mode(self, context):
