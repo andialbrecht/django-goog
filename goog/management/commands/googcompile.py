@@ -22,9 +22,10 @@ class Command(BaseCommand):
         calcdeps = os.path.join(closure_path, 'closure', 'bin', 'calcdeps.py')
         cmd = [sys.executable, calcdeps,
                '-o', 'compiled',
-               '--compiler_jar', compiler_jar,
-               '--compiler_flags=--compilation_level=ADVANCED_OPTIMIZATIONS',
-               ]
+               '--compiler_jar', compiler_jar,]
+        for flag in getattr(settings, 'GOOG_COMPILER_FLAGS',
+                            ['--compilation_level=ADVANCED_OPTIMIZATIONS']):
+            cmd.append('--compiler_flags=%s' % flag)
         # add namespaces -p path
         goog_included = False
         goog_td_included = False
