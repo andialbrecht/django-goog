@@ -66,7 +66,7 @@ Settings
 
 ``GOOG_DEV_CSS`` (default: empty)
   A list of short names for default CSS files in development mode. See
-  devcss_ for details.
+  :ref:`devcss` for details.
 
 
 .. _defnamespaces:
@@ -135,6 +135,7 @@ your HTML base template:
 
 
 .. _devcss:
+
 CSS in Development Mode
 -----------------------
 
