@@ -35,6 +35,98 @@ and add ``"goog.middleware.GoogDevelopmentMiddleware",`` to
 ``MIDDLEWARE_CLASSES`` (only needed in development mode to serve
 JavaScript dependencies).
 
+
+Settings
+--------
+
+``GOOG_DEV_MODE`` (default: ``False``)
+  Set this to ``True`` when developing the JavaScript part of your
+  application. If ``False`` the compiled version of your scripts are
+  loaded.
+
+``GOOG_CLOSURE_PATH`` (defaults to temp directory)
+  Local path to closure libraries. Run ``python manage.py
+  googdownload`` to download the Closure library to this directory.
+
+``GOOG_COMPILER_JAR`` (defaults to temp directory)
+  Local path to ``compiler.jar``. Run ``python manage.py
+  googdownload`` to download the compiler to this path.
+
+``GOOG_JS_NAMESPACES``
+  A mapping between namespace names and attributes for each
+  namespace. See defnamespaces_ for details.
+
+``GOOG_JS_FILES``
+  A mapping between applications scripts and their attributes. See
+  defappscripts_ for details.
+
+``GOOG_COMPILER_FLAGS`` (default uses advanced optimizations)
+  A list of flags passed to the Closure compiler. The default passes
+  '--compilation_level=ADVANCED_OPTIMIZATIONS' to the compiler.
+
+
+.. _defnamespaces:
+Defining Namespaces
+-------------------
+
+Each namespace is defined as an entry in ``GOOG_JS_NAMESPACES``
+setting. Here's an example entry:
+
+::
+
+  GOOG_JS_NAMESPACES = {
+    'ns': {
+      'dev_url': '{{STATIC_URL}}jslib/ns/deps.js',
+      'path': 'example/static/jslib/ns/',
+      'use_goog': True,
+      'use_goog_third_party': True,
+    }
+  }
+
+This entry defines a namespace named 'ns'. ``dev_url`` defines the
+(relative) path to the deps.js, that is included in development
+mode. ``path`` defines the path to the sources directory. ``use_goog``
+and ``use_goog_third_party`` determine whether the Closure libraries
+will be included at compile time.
+
+
+.. _defappscripts:
+Defining Application Scripts
+----------------------------
+
+Each application script is defined as an entry in ``GOOG_JS_FILES``
+setting. Here's an example:
+
+::
+
+  GOOG_JS_FILES = {
+    'app': {
+      'url': '{{STATIC_URL}}js/app.js',
+      'url_compiled': None,
+      'path': None
+    }
+  }
+
+This defines 'app' as an application script with a path pointing to
+'url' as the version used for development. 'url_compiled' and 'path'
+are calculated by ``django-goog``.
+
+
+Commands
+--------
+
+The following ``manage.py`` commands are available:
+
+``googdownload``
+  Download a suitable Closure library and compiler.
+
+``googdeps NAMESPACE``
+  Calculate dependency script (``deps.js``) for the given namespace.
+
+``googcompile``
+  Compile all application scripts and namespaces packages.
+
+
 TODO: Refer to docs, but write them first.
 
 
