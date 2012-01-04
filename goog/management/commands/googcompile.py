@@ -5,6 +5,7 @@ import subprocess
 import sys
 
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand
 
 from goog import utils
@@ -40,6 +41,8 @@ class Command(BaseCommand):
         # iterate files and compile them
         for key, data in getattr(settings, 'GOOG_JS_FILES', {}).iteritems():
             infile = utils._get_infile(data)
+            if infile is None:
+                raise ImproperlyConfigured('Missing JS file: %r' % data)
             outfile = utils._get_outfile(infile, data)
             this_cmd = cmd+['-i', infile]
             p = subprocess.Popen(this_cmd, stdout=subprocess.PIPE)
