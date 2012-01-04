@@ -112,6 +112,24 @@ This defines 'app' as an application script with a path pointing to
 are calculated by ``django-goog``.
 
 
+.. _editemplate:
+HTML Template
+-------------
+
+Add the ``goog_links`` template tag somewhere in the HEAD section of
+your HTML base template:
+
+::
+
+  {% load googtags %}
+  <html>
+    <head>
+      {% goog_links %}
+    </head>
+    <body></body>
+  </html>
+
+
 Commands
 --------
 
