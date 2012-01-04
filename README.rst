@@ -64,6 +64,10 @@ Settings
   A list of flags passed to the Closure compiler. The default passes
   '--compilation_level=ADVANCED_OPTIMIZATIONS' to the compiler.
 
+``GOOG_DEV_CSS`` (default: empty)
+  A list of short names for default CSS files in development mode. See
+  devcss_ for details.
+
 
 .. _defnamespaces:
 Defining Namespaces
@@ -128,6 +132,33 @@ your HTML base template:
     </head>
     <body></body>
   </html>
+
+
+.. _devcss:
+CSS in Development Mode
+-----------------------
+
+The UI widgets provided by the Closure library require style sheets
+(CSS) to work right. During development it could be a bit annoying to
+include (and later exclude) the required CSS files when experimenting
+with widgets.
+
+``django-goog`` provides an easy way to serve the default CSS files
+that come with Closure library by adding them to the ``GOOG_DEV_CSS``
+list in your settings file. The entries are just shortcuts for the
+full paths as found in the Closure examples. For example if an example
+includes "../../css/button.css" just add "button" to ``GOOG_DEV_CSS``:
+
+::
+
+  GOOG_DEV_CSS = (
+    'button', 'dialog', 'linkbutton',
+  )
+
+Note that this styles are only served when ``GOOG_DEV_MODE`` is set to
+``True`` (and ``DEBUG`` is also set to ``True``). The intention is
+that you either merge the Closure libraries' default CSS or add your
+own styles to your global CSS file(s).
 
 
 Commands
