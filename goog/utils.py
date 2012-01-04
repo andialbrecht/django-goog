@@ -13,7 +13,9 @@ from django.contrib.staticfiles import finders
 from django.core.exceptions import ImproperlyConfigured
 
 
+# TODO(andi) Make this a setting.
 CLOSURE_LIB_URL = 'http://closure-library.googlecode.com/files/closure-library-20110323-r790.zip'
+#CLOSURE_LIB_URL = 'http://closure-library.googlecode.com/files/closure-library-20111110-r1376.zip'
 CLOSURE_COMPILER_URL = 'http://closure-compiler.googlecode.com/files/compiler-latest.zip'
 
 log = logging.getLogger('goog')
