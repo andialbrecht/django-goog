@@ -180,6 +180,9 @@ The following ``manage.py`` commands are available:
 ``googcompile``
   Compile all application scripts and namespaces packages.
 
+``googdumpcss``
+  Print out contents of all files listed in ``GOOG_DEV_CSS``.
+
 
 TODO: Refer to docs, but write them first.
 
