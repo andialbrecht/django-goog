@@ -60,6 +60,10 @@ Settings
   A mapping between applications scripts and their attributes. See
   defappscripts_ for details.
 
+``GOOG_JS_EXTERNS``
+  List of paths to JavaScript files that should be compiled in the
+  final JavaScript without modification.
+
 ``GOOG_COMPILER_FLAGS`` (default uses advanced optimizations)
   A list of flags passed to the Closure compiler. The default passes
   '--compilation_level=ADVANCED_OPTIMIZATIONS' to the compiler.

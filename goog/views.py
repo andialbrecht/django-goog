@@ -20,10 +20,11 @@ def serve_closure(request, path):
                               ('closure/', 'third_party/closure/'))
     else:
         namespaces = getattr(settings, 'GOOG_JS_NAMESPACES', {})
-        if ns not in namespaces or not namespaces[ns].get('path'):
-            return HttpResponseNotFound(path)
-        full_path = os.path.abspath(
-            os.path.join(namespaces[ns].get('path'), '../', path))
+        if ns in namespaces and namespaces[ns].get('path'):
+            full_path = os.path.abspath(
+                os.path.join(namespaces[ns].get('path'), '../', path))
+        else:
+            full_path = path  # simply try to serve the file directly
         try:
             stat = os.stat(full_path)
         except OSError:

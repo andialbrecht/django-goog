@@ -27,6 +27,8 @@ class Command(BaseCommand):
         for flag in getattr(settings, 'GOOG_COMPILER_FLAGS',
                             ['--compilation_level=ADVANCED_OPTIMIZATIONS']):
             cmd.append('--compiler_flags=%s' % flag)
+        for extern in getattr(settings, 'GOOG_JS_EXTERNS', []):
+            cmd.append('--compiler_flags=--externs=%s' % extern)
         # add namespaces -p path
         goog_included = False
         goog_td_included = False
