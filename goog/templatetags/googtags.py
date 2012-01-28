@@ -38,7 +38,7 @@ class GoogLinksNode(template.Node):
         jsfiles = getattr(settings, 'GOOG_JS_FILES', {})
         for name in jsfiles:
             html.append(self._create_js_tag(jsfiles[name]['url'], context))
-        for extern in getattr(settings, 'GOOG_JS_EXTERNS'):
+        for extern in getattr(settings, 'GOOG_JS_EXTERNS', []):
             html.append(self._create_js_tag(
                 reverse('goog_serve_closure', args=(extern,)), context))
         return html
