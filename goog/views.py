@@ -35,6 +35,7 @@ def serve_closure(request, path):
 def _serve_closure(request, path, prefixes):
     closure_path = utils.get_closure_path()
     full_path = None
+    stat = None
     for prefix in prefixes:
         full_path = os.path.join(closure_path, prefix, path)
         try:
@@ -42,7 +43,7 @@ def _serve_closure(request, path, prefixes):
             break
         except OSError:
             pass
-    if full_path is None:
+    if full_path is None or stat is None:
         return HttpResponseNotFound(path)
     return _serve_file(request, stat, path, full_path)
 
