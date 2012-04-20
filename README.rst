@@ -31,7 +31,7 @@ To install ``django-goog`` using ``pip`` run
    $ pip install -e git+git://github.com/andialbrecht/django-goog.git#egg=django-goog
 
 Then add ``"goog"`` to you ``INSTALLED_APPS`` in your ``settings.py``
-and add ``"goog.middleware.GoogDevelopmentMiddleware",`` to
+and add ``"goog.middleware.GoogDevelopmentMiddleware",`` at the top of
 ``MIDDLEWARE_CLASSES`` (only needed in development mode to serve
 JavaScript dependencies).
 
