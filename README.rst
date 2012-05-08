@@ -97,6 +97,12 @@ mode. ``path`` defines the path to the sources directory. ``use_goog``
 and ``use_goog_third_party`` determine whether the Closure libraries
 will be included at compile time.
 
+If you want to include namespaces from an installed Python module or a
+Django application, ``path`` allows a special syntax:
+``"app:appname/path2/"``. If ``path`` is in this form, ``appname`` is
+imported and the full path is calculated from the physical module
+location and ``path2``.
+
 
 .. _defappscripts:
 Defining Application Scripts
