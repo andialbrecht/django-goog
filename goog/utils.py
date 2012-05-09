@@ -137,19 +137,25 @@ def get_compiled_mtime():
 def is_devmode():
     """Returns True iff in development mode."""
     return settings.DEBUG and getattr(settings, 'GOOG_DEV_MODE', False)
-
-
-def abspath_for_namespace(info, path):
-    """Returns absolute path for a given namespace info.
+    
+    
+def get_abspath(dirpath):
+    """Returns absolute path.
 
     This mainly resolves paths from installed apps in the form
     "app:appname/PATH".
     """
-    dirpath = info.get('path')
-    assert dirpath
     if dirpath.startswith('app:'):  # resolve app prefix
         appname, dirpath = dirpath[4:].split('/', 1)
         mod = __import__(appname)
         dirpath = os.path.abspath(os.path.join(os.path.dirname(mod.__file__),
                                                dirpath))
+    return dirpath
+
+
+def abspath_for_namespace(info, path):
+    """Returns absolute path for a given namespace info."""
+    dirpath = info.get('path')
+    assert dirpath
+    dirpath = get_abspath(dirpath)
     return os.path.abspath(os.path.join(dirpath, '../', path))

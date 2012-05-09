@@ -28,7 +28,7 @@ class Command(BaseCommand):
                             ['--compilation_level=ADVANCED_OPTIMIZATIONS']):
             cmd.append('--compiler_flags=%s' % flag)
         for extern in getattr(settings, 'GOOG_JS_EXTERNS', []):
-            cmd.append('--compiler_flags=--externs=%s' % extern)
+            cmd.append('--compiler_flags=--externs=%s' % utils.get_abspath(extern))
         # add namespaces -p path
         goog_included = False
         goog_td_included = False
@@ -39,7 +39,8 @@ class Command(BaseCommand):
             if not goog_td_included and data.get('use_goog_third_party', False):
                 cmd.extend(['-p', goog_td_path])
                 goog_td_included = True
-            cmd.extend(['-p', os.path.abspath(os.path.expanduser(data['path']))])
+            full_path = utils.abspath_for_namespace(data, key)
+            cmd.extend(['-p', full_path])
         # iterate files and compile them
         for key, data in getattr(settings, 'GOOG_JS_FILES', {}).iteritems():
             infile = utils._get_infile(data)
