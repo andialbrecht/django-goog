@@ -23,7 +23,7 @@ def serve_closure(request, path):
         if ns in namespaces and namespaces[ns].get('path'):
             full_path = utils.abspath_for_namespace(namespaces[ns], path)
         else:
-            full_path = path  # simply try to serve the file directly
+            full_path = utils.get_abspath(path)  # simply try to serve the file directly
         try:
             stat = os.stat(full_path)
         except OSError:
