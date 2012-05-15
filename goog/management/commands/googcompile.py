@@ -27,8 +27,11 @@ class Command(BaseCommand):
         for flag in getattr(settings, 'GOOG_COMPILER_FLAGS',
                             ['--compilation_level=ADVANCED_OPTIMIZATIONS']):
             cmd.append('--compiler_flags=%s' % flag)
-        for extern in getattr(settings, 'GOOG_JS_EXTERNS', []):
-            cmd.append('--compiler_flags=--externs=%s' % utils.get_abspath(extern))
+        for key, data in getattr(settings, 'GOOG_JS_EXTERNS', {}).iteritems():
+            full_path = utils.get_abspath(data.get('path', ''))
+            if full_path is None:
+                raise ImproperlyConfigured('Missing extern JS file: %r' % data)
+            cmd.append('--compiler_flags=--externs=%s' % full_path)
         # add namespaces -p path
         goog_included = False
         goog_td_included = False
