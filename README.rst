@@ -61,8 +61,9 @@ Settings
   defappscripts_ for details.
 
 ``GOOG_JS_EXTERNS``
-  List of paths to JavaScript files that should be compiled in the
-  final JavaScript without modification.
+  A mapping of extern key and url and path. Externs are JavaScript
+  files that should be compiled in the final JavaScript without
+  modification.
 
 ``GOOG_COMPILER_FLAGS`` (default uses advanced optimizations)
   A list of flags passed to the Closure compiler. The default passes
