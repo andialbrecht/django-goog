@@ -38,15 +38,11 @@ class GoogLinksNode(template.Node):
         jsfiles = getattr(settings, 'GOOG_JS_FILES', {})
         for name in jsfiles:
             html.append(self._create_js_tag(jsfiles[name]['url'], context))
-        externs = getattr(settings, 'GOOG_JS_EXTERNS', {})
-        for name in externs:
-            html.append(self._create_js_tag(externs[name]['url'], context))
         return html
 
     def _render_compiled(self, context):
         html = []
         jsfiles = getattr(settings, 'GOOG_JS_FILES', {})
-        jsfiles.update(getattr(settings, 'GOOG_JS_EXTERNS', {}))
         for name in jsfiles:
             urlc = jsfiles[name].get('url_compiled', None)
             if urlc is None:
