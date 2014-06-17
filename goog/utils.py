@@ -16,7 +16,8 @@ from django.core.exceptions import ImproperlyConfigured
 # TODO(andi) Make this a setting.
 CLOSURE_LIB_URL = 'http://closure-library.googlecode.com/files/closure-library-20110323-r790.zip'
 #CLOSURE_LIB_URL = 'http://closure-library.googlecode.com/files/closure-library-20111110-r1376.zip'
-CLOSURE_COMPILER_URL = 'http://closure-compiler.googlecode.com/files/compiler-latest.zip'
+#CLOSURE_COMPILER_URL = 'http://closure-compiler.googlecode.com/files/compiler-latest.zip'
+CLOSURE_COMPILER_URL = 'http://dl.google.com/closure-compiler/compiler-latest.zip'
 
 log = logging.getLogger('goog')
 
@@ -60,8 +61,8 @@ def get_closure_path(interactive=False):
             log.error(msg)
             raise ImproperlyConfigured(msg)
         else:
-            if os.path.isdir(path) and os.listdir(path):
-                raise ImproperlyConfigured('Directory %s exists and is not empty' % path)
+            #if os.path.isdir(path) and os.listdir(path):
+            #    raise ImproperlyConfigured('Directory %s exists and is not empty' % path)
             answer = raw_input('Download Closure library (Y/n)? ')
             if answer.strip().lower() in ('', 'y', 'yes', 'j'):
                 _download_closure_lib(path)
@@ -137,8 +138,8 @@ def get_compiled_mtime():
 def is_devmode():
     """Returns True iff in development mode."""
     return settings.DEBUG and getattr(settings, 'GOOG_DEV_MODE', False)
-    
-    
+
+
 def get_abspath(dirpath):
     """Returns absolute path.
 
