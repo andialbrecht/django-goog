@@ -1,5 +1,8 @@
 from django.conf import settings
-from django.conf.urls.defaults import patterns, include
+try:
+    from django.conf.urls.defaults import patterns, include
+except ImportError:  # Django >= 1.6
+    from django.conf.urls import patterns, include
 
 import goog.urls
 from goog import utils
